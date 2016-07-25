@@ -294,6 +294,42 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($select, '<select name="select-name" id="select-name-id"></select>');
     }
 
+    public function testSelectWithPlaceholder()
+    {
+        $select = $this->formBuilder->selectWithPlaceholder(
+            'size',
+            ['L' => 'Large', 'S' => 'Small']
+        );
+        $this->assertEquals($select,
+            '<select name="size"><option disabled selected>Select one</option><option value="L">Large</option><option value="S">Small</option></select>');
+
+        $select = $this->formBuilder->selectWithPlaceholder(
+            'size',
+            ['L' => 'Large', 'S' => 'Small'],
+            'L'
+        );
+        $this->assertEquals($select,
+            '<select name="size"><option disabled>Select one</option><option value="L" selected="selected">Large</option><option value="S">Small</option></select>');
+
+        $select = $this->formBuilder->selectWithPlaceholder(
+            'size',
+            ['L' => 'Large', 'S' => 'Small'],
+            null,
+            ['class' => 'class-name', 'id' => 'select-id']
+        );
+        $this->assertEquals($select,
+            '<select class="class-name" id="select-id" name="size"><option disabled selected>Select one</option><option value="L">Large</option><option value="S">Small</option></select>');
+
+        $this->formBuilder->label('select-name-id');
+        $select = $this->formBuilder->selectWithPlaceholder(
+            'select-name-id',
+            [],
+            null,
+            ['name' => 'select-name']
+        );
+        $this->assertEquals($select, '<select name="select-name" id="select-name-id"><option disabled selected>Select one</option></select>');
+    }
+
     public function testFormSelectRepopulation()
     {
         $list = ['L' => 'Large', 'M' => 'Medium', 'S' => 'Small'];
