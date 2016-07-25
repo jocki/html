@@ -210,6 +210,20 @@ class FormBuilderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('<input class="span2" name="foo" type="date">', $form4);
     }
 
+    public function testFormMonth()
+    {
+        $form1 = $this->formBuilder->month('foo');
+        $form2 = $this->formBuilder->month('foo', '2015-02');
+        $form3 = $this->formBuilder->month('foo', \Carbon\Carbon::now());
+        $form4 = $this->formBuilder->month('foo', null, ['class' => 'span2']);
+
+        $this->assertEquals('<input name="foo" type="month">', $form1);
+        $this->assertEquals('<input name="foo" type="month" value="2015-02">', $form2);
+        $this->assertEquals('<input name="foo" type="month" value="' . \Carbon\Carbon::now()->format('Y-m') . '">',
+            $form3);
+        $this->assertEquals('<input class="span2" name="foo" type="month">', $form4);
+    }
+
     public function testFormTime()
     {
         $form1 = $this->formBuilder->time('foo');

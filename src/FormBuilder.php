@@ -375,6 +375,23 @@ class FormBuilder
     }
 
     /**
+     * Create a month input field.
+     *
+     * @param string $name
+     * @param string $value
+     * @param array $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function month($name, $value = null, $options = [])
+    {
+        if ($value instanceof DateTime) {
+            $value = $value->format('Y-m');
+        }
+        return $this->input('month', $name, $value, $options);
+    }
+
+    /**
      * Create a datetime input field.
      *
      * @param  string $name
